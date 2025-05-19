@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-roboto: "Roboto", "sans-serif";
+  --color-iress-primary: #361e44;
+  --color-iress-secondary: #73eead;
+  --color-iress-accent: #eb5362;
+}
