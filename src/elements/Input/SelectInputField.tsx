@@ -47,7 +47,9 @@ const SelectInputField: React.FC<Props> = ({
   console.log(`activeVal: `, activeVal);
 
   useEffect(() => {
-    if (value) setActiveVal(value);
+    if (value) {
+      setActiveVal(value);
+    }
   }, [value, setActiveVal]);
 
   return (

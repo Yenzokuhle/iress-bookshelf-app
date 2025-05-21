@@ -17,7 +17,7 @@ export const WelcomePageValidation = Yup.object().shape({
   title: Yup.string().required("Book title is required"),
   description: Yup.string().required("Book description is required"),
   author: Yup.string().required("Book author is required"),
-  genre: Yup.string().required("Book author is required"),
+  genre: Yup.string().required("Book genre is required"),
   image: mixed<File>()
     .test("required", "You need to provide the book image", (file) => {
       if (file?.name !== "") {

@@ -1,9 +1,15 @@
-import type { FC } from "react";
+import { useState, type FC } from "react";
 import { CustomText, IconButton, PrimaryButton } from "../../elements";
 import { IoMdClose } from "react-icons/io";
 import BookCard from "../BookCard";
 import BookOne from "/book-one.jpg";
 import { type Book } from "../../helpers/types";
+
+type DataResponse = {
+  message: string;
+  isSuccess: boolean;
+  data: number;
+};
 
 type RemoveBookViewProps = {
   handleCloseButton: () => void;
@@ -12,7 +18,42 @@ type RemoveBookViewProps = {
 
 const RemoveBookView: FC<RemoveBookViewProps> = ({
   handleCloseButton,
+  activeBook,
 }: RemoveBookViewProps) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const customHandleSubmit = async (id: string) => {
+    setIsLoading(true);
+
+    try {
+      setIsLoading(true);
+      await fetch(
+        `${import.meta.env.VITE_PUBLIC_API_HOST}/api/Book/DeleteBook/${id}`,
+        {
+          method: "POST",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      ).then((res) => {
+        res.json().then(async (data: DataResponse) => {
+          console.log(`DATA: `, data);
+          setIsLoading(false);
+
+          if (data?.isSuccess) {
+            handleCloseButton();
+          } else {
+            //set error message
+          }
+        });
+      });
+    } catch (error) {
+      console.log(`Error: `, error);
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="w-[700px] h-auto flex flex-col gap-y-4 bg-white rounded-[24px] mMD:rounded-[20px] overflow-hidden py-8 relative pr-[24px]">
       <div className="w-full h-auto bg-iress-primary flex flex-row justify-between px-[20px] py-[16px] rounded-r-full">
@@ -34,10 +75,10 @@ const RemoveBookView: FC<RemoveBookViewProps> = ({
       <div className="w-full h-auto flex flex-row pl-[24px]">
         <div className="w-full h-auto">
           <BookCard
-            title={"Different winter"}
-            author={"Mia Jackson"}
-            year={"2024"}
-            image={BookOne}
+            title={activeBook?.title || ""}
+            author={activeBook?.author || ""}
+            year={activeBook?.year.toString() || ""}
+            image={activeBook?.image || BookOne}
             handleIconClick={() => null}
             handleButtonClick={() => null}
             hideActions={true}
@@ -53,7 +94,7 @@ const RemoveBookView: FC<RemoveBookViewProps> = ({
             />
 
             <CustomText
-              textLabel={"Different Winter"}
+              textLabel={activeBook?.title || ""}
               fontWeight="font-medium"
               fontSize="text-[22px]"
               fontColor={`text-black`}
@@ -68,12 +109,21 @@ const RemoveBookView: FC<RemoveBookViewProps> = ({
             />
 
             <div className="w-fit h-auto">
-              <PrimaryButton
-                label={"Delete book"}
-                buttonType={"accent"}
-                handleClick={() => null}
-                isValid={true}
-              />
+              {isLoading ? (
+                <CustomText
+                  textLabel={"Loading ..."}
+                  fontWeight="font-medium"
+                  fontSize="text-[24px]"
+                  fontColor={`text-black`}
+                />
+              ) : (
+                <PrimaryButton
+                  label={"Delete book"}
+                  buttonType={"accent"}
+                  handleClick={() => customHandleSubmit(activeBook?.id || "")}
+                  isValid={true}
+                />
+              )}
             </div>
           </div>
         </div>

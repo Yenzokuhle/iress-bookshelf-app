@@ -17,13 +17,14 @@ export const ImageButton: React.FC<ImageButtonProps> = ({
     setValue,
     formState: { errors },
   } = useFormContext();
-  const [selectImage, setSelectedimage] = useState<string | undefined>();
+  const [selectImage, setSelectedImage] = useState<string | undefined>();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const val: FileList | null = event?.target?.files;
 
     if (val) {
-      setSelectedimage(URL.createObjectURL(val[0]));
+      console.log(`val: `, val[0]);
+      setSelectedImage(URL.createObjectURL(val[0]));
       setValue(name, val[0]);
     }
   };

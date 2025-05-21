@@ -20,9 +20,11 @@ export const BookCard: React.FC<BookCardProps> = ({
   handleButtonClick,
   hideActions = false,
 }: BookCardProps) => {
+  console.log(`image: `, image);
+
   return (
     <div className={`w-[300px] h-auto flex flex-col `}>
-      <div className="w-full h-[60%] bg-amber-300 rounded-t-[20px]">
+      <div className="w-full h-[60%] rounded-t-[20px]">
         <img
           src={image}
           alt="iress-logo"
