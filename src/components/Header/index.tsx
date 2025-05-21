@@ -2,12 +2,17 @@ import { useState } from "react";
 import { BookEditView, ModalView } from "..";
 import { CustomText, PrimaryButton } from "../../elements";
 import LogoIcon from "/logo.png";
+import type { Book } from "../../helpers/types";
 
 type HeaderProps = {
   label: string;
+  handleAddItem: (item: Book) => void;
 };
 
-export const Header: React.FC<HeaderProps> = ({ label }: HeaderProps) => {
+export const Header: React.FC<HeaderProps> = ({
+  label,
+  handleAddItem,
+}: HeaderProps) => {
   const [modalViewNewBook, setModalNewBook] = useState<boolean>(false);
 
   return (
@@ -21,6 +26,7 @@ export const Header: React.FC<HeaderProps> = ({ label }: HeaderProps) => {
         <BookEditView
           isUpdate={false}
           handleCloseButton={() => setModalNewBook(false)}
+          handleUpdate={handleAddItem}
         />
       </ModalView>
       <div className="w-auto h-auto">
