@@ -16,7 +16,7 @@ const Home: React.FC = () => {
   const navigate = useNavigate();
   const [modalViewDelete, setModalViewDelete] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [booksFromApi, setBooksFromApi] = useState<Book[] | undefined>([]);
+  const [booksFromApi, setBooksFromApi] = useState<Book[] | undefined>();
   const [bookToDelete, setBookToDelete] = useState<Book | undefined>();
 
   const handleGetBooks = async () => {
@@ -58,15 +58,11 @@ const Home: React.FC = () => {
     [booksFromApi]
   );
 
-  const handleAddItem = useCallback(
-    (item: Book) => {
-      const newArray = booksFromApi;
-      newArray?.push(item);
-
-      setBooksFromApi(newArray);
-    },
-    [booksFromApi]
-  );
+  const handleAddItem = useCallback((item: Book, books: Book[] | undefined) => {
+    const newArray = books ? [...books] : [];
+    newArray?.push(item);
+    setBooksFromApi(newArray);
+  }, []);
 
   useEffect(() => {
     handleGetBooks();
@@ -102,10 +98,13 @@ const Home: React.FC = () => {
         />
       </ModalView>
 
-      <Header label="Bookshelf App" handleItemAdded={handleAddItem} />
+      <Header
+        label={"Bookshelf App"}
+        handleAddItem={(e) => handleAddItem(e, booksFromApi)}
+      />
 
       <div className="w-full h-auto grid grid-cols-3 gap-6">
-        {booksFromApi?.length === 0 && isLoading && (
+        {booksFromApi?.length === 0 && !isLoading && (
           <div className="w-full h-full flex flex-row justify-center items-center">
             <CustomText
               textLabel={"No books available, please add some"}

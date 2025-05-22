@@ -6,7 +6,7 @@ import type { Book } from "../../helpers/types";
 
 type HeaderProps = {
   label: string;
-  handleAddItem: (item: Book) => void;
+  handleAddItem?: (item: Book) => void;
 };
 
 export const Header: React.FC<HeaderProps> = ({
