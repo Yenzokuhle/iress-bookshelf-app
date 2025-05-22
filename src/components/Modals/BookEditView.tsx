@@ -56,7 +56,7 @@ const BookEditView: FC<BookEditViewProps> = ({
   activeBook,
   handleUpdate,
 }: BookEditViewProps) => {
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>();
   const [bookFromApi, setBookFromApi] = useState<Book | undefined>();
 
   const {
@@ -95,10 +95,7 @@ const BookEditView: FC<BookEditViewProps> = ({
         },
       }).then((res) => {
         res.json().then(async (data: DataResponse) => {
-          console.log(`DATA: `, data);
-          //setIsLoading(false);
           if (data?.isSuccess) {
-            console.log(`Got it here: `, data?.data?.id);
             handleCreateImage(data?.data?.id || "", dataResults?.image);
           } else {
             setErrorMessage("Oops, something went wrong");
@@ -107,8 +104,9 @@ const BookEditView: FC<BookEditViewProps> = ({
         });
       });
     } catch (error) {
-      console.log(`Error: `, error);
+      console.warn(`Error: `, error);
       setIsLoading(false);
+      setErrorMessage(error as unknown as string);
     }
   }, []);
 
@@ -261,7 +259,7 @@ const BookEditView: FC<BookEditViewProps> = ({
   // eslint-disable-next-line
   const onError = (errors: any) => {
     setErrorMessage(errors);
-    console.log("Submitting onError: ", errors);
+    console.warn("Submitting onError: ", errors);
   };
 
   useEffect(() => {
@@ -412,6 +410,13 @@ const BookEditView: FC<BookEditViewProps> = ({
                         />
                       </div>
                     </div>
+                    {errorMessage && (
+                      <div className="w-full h-auto flex justify-center">
+                        <span className="text-sm font-medium text-[#e22b2b] text-[16px] tMD:text-[16px] mMD:text-[14px] mSM:text-[12px] font-poppins">
+                          {errorMessage}
+                        </span>
+                      </div>
+                    )}
                   </div>
 
                   <div className="w-full h-auto pt-[24px]">

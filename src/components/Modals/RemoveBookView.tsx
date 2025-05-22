@@ -14,14 +14,16 @@ type DataResponse = {
 type RemoveBookViewProps = {
   handleCloseButton: () => void;
   activeBook?: Book;
+  handleDelete?: (e: Book) => void;
 };
 
 const RemoveBookView: FC<RemoveBookViewProps> = ({
   handleCloseButton,
   activeBook,
+  handleDelete,
 }: RemoveBookViewProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
+  const [errorMessage, setErrorMessage] = useState<string>();
   const customHandleSubmit = async (id: string) => {
     setIsLoading(true);
 
@@ -38,19 +40,21 @@ const RemoveBookView: FC<RemoveBookViewProps> = ({
         }
       ).then((res) => {
         res.json().then(async (data: DataResponse) => {
-          console.log(`DATA: `, data);
           setIsLoading(false);
 
-          if (data?.isSuccess) {
+          if (data?.isSuccess && activeBook && handleDelete) {
+            handleDelete(activeBook);
             handleCloseButton();
           } else {
-            //set error message
+            //set error message\
+            setErrorMessage("Oops, something went wrong.");
           }
         });
       });
     } catch (error) {
-      console.log(`Error: `, error);
+      console.warn(`Error: `, error);
       setIsLoading(false);
+      setErrorMessage(error as unknown as string);
     }
   };
 
@@ -100,6 +104,14 @@ const RemoveBookView: FC<RemoveBookViewProps> = ({
               fontColor={`text-black`}
             />
           </div>
+
+          {errorMessage && (
+            <div className="w-full h-auto flex justify-start">
+              <span className="text-sm font-medium text-[#e22b2b] text-[16px] tMD:text-[16px] mMD:text-[14px] mSM:text-[12px] font-poppins">
+                {errorMessage}
+              </span>
+            </div>
+          )}
           <div className="w-full h-auto flex flex-col gap-y-2">
             <CustomText
               textLabel={"This action cannot be undone."}
