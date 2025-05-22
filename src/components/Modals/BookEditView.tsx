@@ -133,15 +133,7 @@ const BookEditView: FC<BookEditViewProps> = ({
             console.log(`DATA: `, data);
             setIsLoading(false);
             if (data?.isSuccess && data?.data) {
-              setBookFromApi({
-                id: data?.data?.id,
-                title: data?.data?.title,
-                description: data?.data?.description,
-                author: data?.data?.author,
-                genre: data?.data?.genre,
-                image: data?.data?.image,
-                year: data?.data?.year,
-              });
+              setBookFromApi(data?.data);
             } else {
               setErrorMessage("Oops, something went wrong");
             }
@@ -172,7 +164,6 @@ const BookEditView: FC<BookEditViewProps> = ({
           }
         ).then((res) => {
           res.json().then(async (data: DataResponse) => {
-            console.log(`DATA: `, data);
             setIsLoading(false);
             if (data?.isSuccess && data?.data && handleUpdate) {
               handleUpdate(data.data);
@@ -491,7 +482,12 @@ const BookEditView: FC<BookEditViewProps> = ({
                     <PrimaryButton
                       label={"Done"}
                       buttonType={"secondary"}
-                      handleClick={handleCloseButton}
+                      handleClick={() => {
+                        if (handleUpdate && !isUpdate) {
+                          handleUpdate(bookFromApi);
+                        }
+                        handleCloseButton();
+                      }}
                       isValid={true}
                     />
                   )}

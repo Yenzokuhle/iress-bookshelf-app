@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { CustomText, IconButton, PrimaryButton } from "../elements";
 import { IoChevronBackOutline } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
-import BookOne from "/book-one.jpg";
 import type { Book } from "../helpers/types";
 //import { useQueryParam } from "../helpers/utilities";
 
