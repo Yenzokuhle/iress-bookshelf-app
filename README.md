@@ -1,54 +1,88 @@
-# React + TypeScript + Vite
+# Iress frontend for Bookshelf App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React typescript on Vite.
 
-Currently, two official plugins are available:
+## Getting Started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-## Expanding the ESLint configuration
+### Prerequisites
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Before we get started, we're going to need to make sure we have a few things installed and available on our machine.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+#### Node 20.11.0
+
+#### NPM is the package manage useds
+
+#### React 19.0.0
+
+##### Other
+
+See the installation guides available @ nodejs.org:
+
+https://nodejs.org/en/download/package-manager/
+
+#### NPM
+
+```bash
+npm install -g npm
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Installing
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Below is a series of step by step instructions that tell you how to get a development env running.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+Create a local clone of the repository.
+
+```bash
+git clone git@github.com:Yenzokuhle/iress-bookshelf-app.git
 ```
+
+Enter the cloned repositories' directory.
+
+```bash
+cd /iress-bookshelf-app
+```
+
+Install all the projects dependencies
+
+```bash
+npm install
+```
+
+Create an `.env` file based on the below variables
+
+Export the contents of the created `.env`s by saving new values in file.
+
+```bash
+VITE_PUBLIC_API_HOST=
+```
+
+You will substitute the above env variable for your locally running C# .NET Restfull API provide
+
+Now you can run your app
+
+```bash
+npm run dev
+```
+
+Generate the build files for deployment
+
+```bash
+npm run build
+```
+
+Make sure the backend server is running to have the full app experience.
+
+## Built With
+
+The details of the tech stack that has been used:
+
+- [React](https://reactjs.org/) - Client Framework
+- [Vite](https://vite.dev/guide/) - Frontend build tool
+- [TailwindCSS](https://tailwindcss.com/) - Style Framework
+- [React Hook Form](https://www.react-hook-form.com/) - Input form handling
+
+## Architecture
+
+- [react-router-dom](https://styled-components.com/) - App navigation.
