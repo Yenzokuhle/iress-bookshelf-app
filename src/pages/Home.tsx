@@ -89,11 +89,9 @@ const Home: React.FC = () => {
       >
         <RemoveBookView
           handleCloseButton={() => {
-            if (bookToDelete) {
-              handleDeleteItem(bookToDelete);
-              setModalViewDelete(false);
-            }
+            setModalViewDelete(false);
           }}
+          handleDelete={handleDeleteItem}
           activeBook={bookToDelete}
         />
       </ModalView>
