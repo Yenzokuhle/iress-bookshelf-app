@@ -33,7 +33,6 @@ const Home: React.FC = () => {
         }
       ).then((res) => {
         res.json().then(async (data: DataResponse) => {
-          console.log(`DATA: `, data);
           setIsLoading(false);
           if (data?.isSuccess) {
             setBooksFromApi(data?.data);

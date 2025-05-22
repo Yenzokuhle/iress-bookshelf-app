@@ -42,9 +42,13 @@ const RemoveBookView: FC<RemoveBookViewProps> = ({
         res.json().then(async (data: DataResponse) => {
           setIsLoading(false);
 
-          if (data?.isSuccess && activeBook && handleDelete) {
-            handleDelete(activeBook);
-            handleCloseButton();
+          if (data?.isSuccess) {
+            if (handleDelete && activeBook) {
+              handleDelete(activeBook);
+              handleCloseButton();
+            } else {
+              handleCloseButton();
+            }
           } else {
             //set error message\
             setErrorMessage("Oops, something went wrong.");
